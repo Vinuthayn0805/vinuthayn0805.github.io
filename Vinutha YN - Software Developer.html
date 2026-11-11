@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vinutha Y N — Software Developer</title>
+<meta name="description" content="Vinutha Y N builds AI and automation systems in Python and FastAPI — meeting-minutes automation, lead enrichment pipelines, and natural-language analytics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  --bg:#edeee9;
+  --surface:#e4e6e1;
+  --sunken:#e9eae5;
+  --rule:#ccd0c9;
+  --text:#141c27;
+  --muted:#56606e;
+  --signal:#8a5b00;
+  --signal-soft:#f0e3c6;
+  --flow:#0b6c59;
+
+  --measure: 64ch;
+  --pad: clamp(1.25rem, 5vw, 3rem);
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    color-scheme: dark;
+    --bg:#0e1726;
+    --surface:#162134;
+    --sunken:#111c2d;
+    --rule:#27374f;
+    --text:#e7e3d9;
+    --muted:#93a2b5;
+    --signal:#f0b429;
+    --signal-soft:#362d14;
+    --flow:#5fc9b0;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0e1726;
+  --surface:#162134;
+  --sunken:#111c2d;
+  --rule:#27374f;
+  --text:#e7e3d9;
+  --muted:#93a2b5;
+  --signal:#f0b429;
+  --signal-soft:#362d14;
+  --flow:#5fc9b0;
+}
+
+*,*::before,*::after{ box-sizing:inherit; }
+html{ scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem); }
+html,body{ margin:0; }
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height:1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0 0 auto; height: env(safe-area-inset-top, 0px);
+  background: var(--bg); z-index:10;
+}
+h1,h2,h3{ font-family:"Bricolage Grotesque", "IBM Plex Sans", sans-serif; font-weight:700; letter-spacing:-0.02em; line-height:1.05; margin:0; }
+p{ margin:0 0 1rem; max-width: var(--measure); }
+a{ color: inherit; text-decoration-color: var(--signal); text-underline-offset:0.2em; text-decoration-thickness:0.09em; }
+a:hover{ color: var(--signal); }
+:focus-visible{ outline:2px solid var(--signal); outline-offset:3px; border-radius:2px; }
+ul{ margin:0; padding:0; list-style:none; }
+
+.wrap{ width:min(72rem, 100%); margin-inline:auto; padding-inline: var(--pad); }
+
+/* ---------- top bar ---------- */
+.bar{
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index:9;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.bar__in{ display:flex; align-items:center; gap:1.5rem; height:3.5rem; }
+.bar__name{ font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:1rem; letter-spacing:-0.01em; }
+.bar nav{ margin-left:auto; display:flex; gap:1.25rem; font-size:0.875rem; color:var(--muted); }
+.bar nav a{ text-decoration:none; }
+.bar nav a:hover{ color:var(--signal); }
+.tgl{
+  font: inherit; font-size:0.8125rem; color:var(--muted);
+  background:none; border:1px solid var(--rule); border-radius:999px;
+  padding:0.25rem 0.7rem; cursor:pointer;
+}
+.tgl:hover{ color:var(--signal); border-color:var(--signal); }
+
+/* ---------- hero ---------- */
+.hero{ padding: clamp(3rem,9vw,6rem) 0 clamp(2rem,5vw,3rem); }
+.hero h1{
+  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  max-width: 14ch;
+  margin-bottom: 1.25rem;
+}
+.hero__role{
+  font-size: clamp(1.125rem, 2.4vw, 1.5rem);
+  line-height:1.3; max-width: 28ch; margin:0 0 1.75rem;
+  font-weight:500;
+}
+.hero__role em{ font-style:normal; background: var(--signal-soft); box-shadow: 0 0 0 0.2em var(--signal-soft); }
+.hero p.lede{ color:var(--muted); max-width: 54ch; }
+.acts{ display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1.75rem; }
+.btn{
+  display:inline-block; padding:0.6rem 1.1rem; border-radius:2px;
+  font-size:0.9375rem; font-weight:500; text-decoration:none;
+  border:1px solid var(--rule);
+}
+.btn--go{ background: var(--signal); border-color: var(--signal); color:#141c27; }
+.btn--go:hover{ color:#141c27; filter:brightness(1.07); }
+.btn:hover{ border-color: var(--signal); }
+
+/* ---------- transformer demo ---------- */
+.demo{ border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); background: var(--sunken); }
+.demo__in{ padding: clamp(2rem,5vw,3rem) 0; }
+.demo h2{ font-size: clamp(1.5rem,3.4vw,2rem); margin-bottom:0.5rem; }
+.demo__sub{ color:var(--muted); font-size:0.9375rem; margin-bottom:1.5rem; }
+.tabs{ display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.25rem; }
+.tab{
+  font: inherit; font-size:0.875rem; cursor:pointer;
+  background: var(--bg); color: var(--muted);
+  border:1px solid var(--rule); border-radius:2px;
+  padding:0.45rem 0.85rem;
+}
+.tab:hover{ color: var(--text); }
+.tab[aria-selected="true"]{
+  color: var(--text); border-color: var(--signal);
+  box-shadow: inset 0 -2px 0 var(--signal);
+}
+.panes{ display:grid; gap:0.75rem; grid-template-columns:1fr; align-items:stretch; }
+@media (min-width: 52rem){ .panes{ grid-template-columns:1fr auto 1fr; } }
+.pane{
+  background: var(--bg); border:1px solid var(--rule); border-radius:2px;
+  padding:1rem 1.1rem; min-width:0;
+}
+.pane__cap{
+  font-size:0.75rem; color:var(--muted); letter-spacing:0.02em;
+  margin-bottom:0.7rem; padding-bottom:0.5rem; border-bottom:1px solid var(--rule);
+}
+.mono{
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:0.8125rem; line-height:1.65; margin:0;
+  white-space:pre-wrap; word-break:break-word; color:var(--muted);
+  overflow-x:auto;
+}
+.arrow{
+  display:none; align-self:center; color:var(--flow);
+  font-family:"IBM Plex Mono",monospace; font-size:1.5rem;
+}
+@media (min-width: 52rem){ .arrow{ display:block; } }
+.out{ display:grid; gap:0.7rem; }
+.out li{ border-left:2px solid var(--flow); padding-left:0.75rem; }
+.out b{ display:block; font-size:0.75rem; font-weight:600; color:var(--flow); margin-bottom:0.1rem; }
+.out span{ font-size:0.9rem; }
+.out li, .out .mono{ opacity:0; transform: translateY(4px); animation: in 0.28s ease forwards; }
+.out li:nth-child(2){ animation-delay:0.07s; }
+.out li:nth-child(3){ animation-delay:0.14s; }
+@keyframes in{ to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion: reduce){
+  .out li, .out .mono{ animation:none; opacity:1; transform:none; }
+}
+
+/* ---------- generic section ---------- */
+section{ padding: clamp(3rem,7vw,5rem) 0; }
+.sec-h{ font-size: clamp(1.5rem,3.4vw,2.125rem); margin-bottom:0.35rem; }
+.sec-note{ color:var(--muted); font-size:0.9375rem; margin-bottom:2.25rem; }
+
+/* ---------- experience ---------- */
+.job{ display:grid; gap:0.4rem 2rem; }
+@media (min-width: 52rem){ .job{ grid-template-columns: 16rem 1fr; } }
+.job__meta{ color:var(--muted); font-size:0.9375rem; }
+.job__meta strong{ display:block; color:var(--text); font-size:1.0625rem; font-weight:600; }
+.bullets li{ padding-left:1.1rem; position:relative; margin-bottom:0.7rem; max-width: var(--measure); }
+.bullets li::before{ content:""; position:absolute; left:0; top:0.65em; width:0.4rem; height:1px; background:var(--signal); }
+
+/* ---------- projects ---------- */
+.rec{ border-top:1px solid var(--rule); padding: 2rem 0; display:grid; gap:1rem 2.5rem; }
+@media (min-width: 52rem){ .rec{ grid-template-columns: 1fr 18rem; } }
+.rec:last-of-type{ border-bottom:1px solid var(--rule); }
+.rec h3{ font-size:1.375rem; margin-bottom:0.6rem; }
+.rec p{ margin-bottom:0.75rem; }
+.rec .bullets li{ font-size:0.9375rem; color:var(--muted); }
+.live{ margin:1.1rem 0 0; }
+.live a{
+  display:inline-block; font-size:0.9375rem; font-weight:500;
+  text-decoration:none; padding:0.4rem 0.85rem; border-radius:2px;
+  border:1px solid var(--signal); color:var(--signal);
+}
+.live a:hover{ background: var(--signal-soft); }
+.stack{ font-size:0.8125rem; }
+.stack dt{ color:var(--muted); margin-bottom:0.5rem; }
+.stack dd{ margin:0; display:flex; flex-wrap:wrap; gap:0.35rem; }
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:0.75rem;
+  border:1px solid var(--rule); border-radius:2px; padding:0.15rem 0.45rem; color:var(--muted);
+}
+
+/* ---------- toolkit ---------- */
+.kit{ display:grid; gap:1.75rem 2.5rem; grid-template-columns: repeat(auto-fit, minmax(14rem,1fr)); }
+.kit h3{ font-family:"IBM Plex Sans",sans-serif; font-size:0.9375rem; font-weight:600; letter-spacing:0; margin-bottom:0.6rem; padding-bottom:0.4rem; border-bottom:1px solid var(--rule); }
+.kit li{ color:var(--muted); font-size:0.9375rem; padding:0.15rem 0; }
+
+/* ---------- education ---------- */
+.edu li{ display:grid; gap:0.1rem 2rem; padding:1rem 0; border-top:1px solid var(--rule); }
+@media (min-width: 52rem){ .edu li{ grid-template-columns: 11rem 1fr; } }
+.edu time{ color:var(--signal); font-family:"IBM Plex Mono",monospace; font-size:0.8125rem; padding-top:0.2rem; }
+.edu strong{ font-weight:600; }
+.edu span{ display:block; color:var(--muted); font-size:0.9375rem; }
+
+/* ---------- contact ---------- */
+.contact{ background: var(--surface); border-top:1px solid var(--rule); }
+.contact h2{ font-size: clamp(1.75rem,5vw,3rem); margin-bottom:1rem; max-width:18ch; }
+.cards{ display:grid; gap:0.75rem; grid-template-columns: repeat(auto-fit, minmax(15rem,1fr)); margin-top:2rem; }
+.cards a{
+  display:block; text-decoration:none; background:var(--bg);
+  border:1px solid var(--rule); border-radius:2px; padding:1rem 1.1rem;
+}
+.cards a:hover{ border-color:var(--signal); }
+.cards small{ display:block; color:var(--muted); font-size:0.75rem; margin-bottom:0.2rem; }
+.cards b{ font-weight:500; word-break:break-word; }
+footer{ border-top:1px solid var(--rule); padding:1.5rem 0; color:var(--muted); font-size:0.8125rem; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap bar__in">
+    <span class="bar__name">Vinutha Y N</span>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="tgl" id="tgl" type="button">Dark</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <h1>Software that does the repetitive part.</h1>
+    <p class="hero__role">AI &amp; automation developer — <em>Python, FastAPI, SQL</em></p>
+    <p class="lede">I build backend systems that take messy input — meeting transcripts, half-filled lead lists, a question typed in plain English — and return something structured a team can act on. Most recently at SFJ Business Solutions in Bengaluru.</p>
+    <div class="acts">
+      <a class="btn btn--go" href="#projects">See what I’ve built</a>
+      <a class="btn" href="mailto:vinuthayn17@gmail.com" data-email="vinuthayn17@gmail.com">Email me</a>
+      <a class="btn" href="https://github.com/Vinuthayn0805" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/vinutha-y-n-58880a334/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="demo">
+    <div class="wrap demo__in">
+      <h2>In, then out</h2>
+      <p class="demo__sub">Three systems I’ve built, each doing the same basic job. Pick one to see the shape of it.</p>
+
+      <div class="tabs" role="tablist" aria-label="Example systems">
+        <button class="tab" role="tab" id="t0" aria-controls="panes" aria-selected="true" type="button">Meeting transcript</button>
+        <button class="tab" role="tab" id="t1" aria-controls="panes" aria-selected="false" type="button">Raw lead list</button>
+        <button class="tab" role="tab" id="t2" aria-controls="panes" aria-selected="false" type="button">Question in English</button>
+      </div>
+
+      <div class="panes" id="panes" role="tabpanel" aria-labelledby="t0">
+        <div class="pane">
+          <p class="pane__cap" id="capIn">What goes in</p>
+          <pre class="mono" id="inBody"></pre>
+        </div>
+        <div class="arrow" aria-hidden="true">&rarr;</div>
+        <div class="pane">
+          <p class="pane__cap" id="capOut">What comes back</p>
+          <ul class="out" id="outBody"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="work" class="wrap">
+    <h2 class="sec-h">Where I’ve worked</h2>
+    <p class="sec-note">One role, three production systems.</p>
+    <div class="job">
+      <div class="job__meta">
+        <strong>AI &amp; Automation Developer</strong>
+        SFJ Business Solutions, Bengaluru<br>
+        Oct 2025 – Oct 2026
+      </div>
+      <ul class="bullets">
+        <li>Built AI-powered automation for meeting minutes, Apollo lead enrichment, and CSR/ESG contact research, using Python and FastAPI.</li>
+        <li>Wrote data extraction and automation pipelines on top of the Microsoft Graph API, Apollo API, other REST services, and LLMs.</li>
+        <li>Designed backend services for document processing, lead enrichment, report extraction, and structured data validation against SQL and MySQL.</li>
+        <li>Worked with teams across the business to develop, test, and ship these to production, and tuned them for performance and reliability.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap">
+    <h2 class="sec-h">Projects</h2>
+    <p class="sec-note">Each one started as a manual process someone was doing by hand.</p>
+
+    <article class="rec">
+      <div>
+        <h3>Meeting minutes, generated</h3>
+        <p>Teams meetings produce transcripts nobody rereads. This pulls them automatically and returns the three things people actually want afterwards: what was decided, who owes what, and what is still open.</p>
+        <ul class="bullets">
+          <li>Retrieves meetings and transcripts through the Microsoft Graph API, authenticated with Microsoft Entra ID and OAuth 2.0.</li>
+          <li>FastAPI backend that processes the transcript and uses an LLM to draft summaries, decisions, and action items.</li>
+          <li>Stores generated minutes so they can be reviewed and reused rather than regenerated.</li>
+        </ul>
+        <p class="live"><a href="https://mom-agent-gagan-new.vercel.app/" target="_blank" rel="noopener">Open the live app</a></p>
+      </div>
+      <dl class="stack">
+        <dt>Built with</dt>
+        <dd>
+          <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">MS Graph API</span>
+          <span class="chip">Entra ID</span><span class="chip">OAuth 2.0</span><span class="chip">SQLite</span>
+          <span class="chip">MySQL</span><span class="chip">LLMs</span>
+        </dd>
+      </dl>
+    </article>
+
+    <article class="rec">
+      <div>
+        <h3>Lead enrichment from Apollo</h3>
+        <p>Sales was looking up contacts one at a time. This takes a list of companies and returns verified contact and company details, already checked and ready to import.</p>
+        <ul class="bullets">
+          <li>Calls Apollo’s REST APIs to fetch contact and firmographic data for each record.</li>
+          <li>Validates, de-duplicates, and normalises results in Pandas before export.</li>
+          <li>Writes clean output back out for the CRM, so the research step disappears from the sales workflow.</li>
+        </ul>
+        <p class="live"><a href="https://apollo-gagan-frontend-theta.vercel.app/" target="_blank" rel="noopener">Open the live app</a></p>
+      </div>
+      <dl class="stack">
+        <dt>Built with</dt>
+        <dd>
+          <span class="chip">Python</span><span class="chip">Apollo API</span><span class="chip">REST</span>
+          <span class="chip">Pandas</span><span class="chip">JSON</span>
+        </dd>
+      </dl>
+    </article>
+
+    <article class="rec">
+      <div>
+        <h3>Ask the data a question</h3>
+        <p>An analytics layer for people who don’t write SQL. You type the question, it writes the query, runs it, and explains what the numbers mean.</p>
+        <ul class="bullets">
+          <li>Turns a natural-language question into SQL, then runs it and summarises the result.</li>
+          <li>Reads from CSV, Excel, SQL databases, and cloud data sources through DuckDB.</li>
+          <li>Returns the generated query alongside the answer, so the analysis stays checkable.</li>
+        </ul>
+      </div>
+      <dl class="stack">
+        <dt>Built with</dt>
+        <dd>
+          <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">DuckDB</span>
+          <span class="chip">SQL</span><span class="chip">Pandas</span><span class="chip">LLMs</span>
+        </dd>
+      </dl>
+    </article>
+  </section>
+
+  <section id="toolkit" class="wrap">
+    <h2 class="sec-h">Toolkit</h2>
+    <p class="sec-note">What I reach for, roughly in order of how often.</p>
+    <div class="kit">
+      <div>
+        <h3>Languages</h3>
+        <ul><li>Python</li><li>SQL</li><li>Java, basics</li></ul>
+      </div>
+      <div>
+        <h3>Backend &amp; web</h3>
+        <ul><li>FastAPI</li><li>Flask</li><li>REST APIs</li><li>Selenium</li></ul>
+      </div>
+      <div>
+        <h3>Databases</h3>
+        <ul><li>MySQL</li><li>Oracle</li><li>SQL Server</li><li>DuckDB</li></ul>
+      </div>
+      <div>
+        <h3>AI &amp; automation</h3>
+        <ul><li>Claude and Claude Code</li><li>MCP</li><li>Prompt engineering</li><li>Workflow automation</li></ul>
+      </div>
+      <div>
+        <h3>Data &amp; BI</h3>
+        <ul><li>Power BI</li><li>Power Query, DAX</li><li>Data modelling</li><li>Excel</li></ul>
+      </div>
+      <div>
+        <h3>Tools</h3>
+        <ul><li>Git and GitHub</li><li>Jupyter Notebook</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="wrap">
+    <h2 class="sec-h">Education</h2>
+    <p class="sec-note">All in Bengaluru.</p>
+    <ul class="edu">
+      <li>
+        <time>2023 – 2025</time>
+        <div><strong>Master of Computer Applications</strong><span>CMR Institute of Technology, AECS Layout</span></div>
+      </li>
+      <li>
+        <time>2020 – 2023</time>
+        <div><strong>Bachelor of Computer Applications</strong><span>MS Ramaiah College of Arts, Science and Commerce, Mattikere</span></div>
+      </li>
+      <li>
+        <time>2018 – 2020</time>
+        <div><strong>Pre-University, Science</strong><span>BGS PU College, Gauribidanur</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Have something repetitive that should be a script?</h2>
+      <p class="lede">I’m open to software and AI automation roles. The fastest way to reach me is email.</p>
+      <div class="cards">
+        <a href="mailto:vinuthayn17@gmail.com" data-email="vinuthayn17@gmail.com"><small>Email — click to copy</small><b>vinuthayn17@gmail.com</b></a>
+        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=vinuthayn17@gmail.com" target="_blank" rel="noopener"><small>Or compose in Gmail</small><b>Opens a new tab</b></a>
+        <a href="tel:+917483634898"><small>Phone</small><b>+91 74836 34898</b></a>
+        <a href="https://github.com/Vinuthayn0805" target="_blank" rel="noopener"><small>GitHub</small><b>Vinuthayn0805</b></a>
+        <a href="https://www.linkedin.com/in/vinutha-y-n-58880a334/" target="_blank" rel="noopener"><small>LinkedIn</small><b>Vinutha Y N</b></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Vinutha Y N — Kadugodi, Bengaluru 560067</div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement, tgl = document.getElementById("tgl");
+  function label(){
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.hasAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    tgl.textContent = dark ? "Light" : "Dark";
+  }
+  try{ var s = localStorage.getItem("vyn-theme"); if(s){ root.setAttribute("data-theme", s); } }catch(e){}
+  label();
+  tgl.addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.hasAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try{ localStorage.setItem("vyn-theme", next); }catch(e){}
+    label();
+  });
+
+  function copy(text){
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        return navigator.clipboard.writeText(text).then(function(){ return true; },
+                                                        function(){ return legacy(text); });
+      }
+    }catch(e){}
+    return Promise.resolve(legacy(text));
+  }
+  function legacy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+
+  [].slice.call(document.querySelectorAll("[data-email]")).forEach(function(el){
+    el.addEventListener("click", function(){
+      var addr = el.getAttribute("data-email");
+      var target = el.querySelector("small") || el;
+      var original = target.textContent;
+      copy(addr).then(function(ok){
+        target.textContent = ok ? "Copied " + addr : addr;
+        setTimeout(function(){ target.textContent = original; }, 2600);
+      });
+    });
+  });
+
+  var data = [
+    {
+      capIn: "A Teams meeting transcript",
+      capOut: "Minutes, ready to send",
+      input: "[00:12:04] Priya: We still don’t have the\n           vendor’s revised quote.\n\n[00:12:21] Arun: I’ll chase them by Thursday.\n\n[00:13:02] Priya: Then we lock the Q3 budget\n           on Friday’s call.",
+      output: [
+        ["Decision", "Q3 budget to be finalised on Friday’s call."],
+        ["Action item", "Arun to follow up with the vendor for the revised quote, by Thursday."],
+        ["Still open", "Revised vendor quote not yet received."]
+      ]
+    },
+    {
+      capIn: "A half-filled row from a lead list",
+      capOut: "A verified record",
+      input: "company : Northwind Logistics\ncontact : R. Mehta\ntitle   : —\nemail   : —\nsize    : —",
+      output: [
+        ["Contact", "Rohit Mehta, Head of Operations"],
+        ["Company", "Northwind Logistics — 1,200 employees, HQ Pune"],
+        ["Status", "Email verified, duplicate check passed, ready for CRM import"]
+      ]
+    },
+    {
+      capIn: "A question from someone who doesn’t write SQL",
+      capOut: "The query, and the answer",
+      input: "“Which regions missed their target\n last quarter, and by how much?”",
+      output: [
+        ["Generated query", "SELECT region, SUM(revenue) AS actual, SUM(target) AS target\nFROM sales\nWHERE quarter = '2026-Q2'\nGROUP BY region\nHAVING SUM(revenue) < SUM(target);"],
+        ["Answer", "Three of eight regions finished below target. West is the largest shortfall, then North and East."]
+      ]
+    }
+  ];
+
+  var tabs = [].slice.call(document.querySelectorAll(".tab"));
+  var inBody = document.getElementById("inBody"),
+      outBody = document.getElementById("outBody"),
+      capIn = document.getElementById("capIn"),
+      capOut = document.getElementById("capOut"),
+      panes = document.getElementById("panes");
+
+  function render(i){
+    var d = data[i];
+    capIn.textContent = d.capIn;
+    capOut.textContent = d.capOut;
+    inBody.textContent = d.input;
+    outBody.innerHTML = "";
+    d.output.forEach(function(row){
+      var li = document.createElement("li");
+      var b = document.createElement("b"); b.textContent = row[0];
+      var body = document.createElement(row[1].indexOf("SELECT") === 0 ? "pre" : "span");
+      if(body.tagName === "PRE"){ body.className = "mono"; }
+      body.textContent = row[1];
+      li.appendChild(b); li.appendChild(body);
+      outBody.appendChild(li);
+    });
+    tabs.forEach(function(t, n){ t.setAttribute("aria-selected", n === i ? "true" : "false"); });
+    panes.setAttribute("aria-labelledby", "t" + i);
+  }
+
+  tabs.forEach(function(t, i){
+    t.addEventListener("click", function(){ render(i); });
+    t.addEventListener("keydown", function(e){
+      if(e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      var n = (i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+      tabs[n].focus(); render(n);
+    });
+  });
+  render(0);
+})();
+</script>
+</body>
+</html>
